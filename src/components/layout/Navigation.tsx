@@ -2,7 +2,7 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
-import { Scan, ShoppingBasket, Clock, BarChart2 } from 'lucide-react';
+import { Scan, ShoppingBasket, Utensils, BarChart2 } from 'lucide-react';
 
 const Navigation: React.FC = () => {
   const location = useLocation();
@@ -10,7 +10,7 @@ const Navigation: React.FC = () => {
   const navItems = [
     { icon: Scan, label: 'Scan', path: '/' },
     { icon: ShoppingBasket, label: 'Inventory', path: '/inventory' },
-    { icon: Clock, label: 'Expiring', path: '/expiring' },
+    { icon: Utensils, label: 'Recipes', path: '/recipes' },
     { icon: BarChart2, label: 'Stats', path: '/stats' },
   ];
 

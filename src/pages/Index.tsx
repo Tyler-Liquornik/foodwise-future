@@ -9,7 +9,7 @@ import PageTransition from '@/components/transitions/PageTransition';
 
 import Scanner from '@/components/features/Scanner';
 import Inventory from '@/components/features/Inventory';
-import ExpirySoon from '@/components/features/ExpirySoon';
+import Recipes from '@/components/features/Recipes';
 import Statistics from '@/components/features/Statistics';
 
 const Index: React.FC = () => {
@@ -32,9 +32,9 @@ const Index: React.FC = () => {
                 <Inventory />
               </PageTransition>
             } />
-            <Route path="/expiring" element={
+            <Route path="/recipes" element={
               <PageTransition>
-                <ExpirySoon />
+                <Recipes />
               </PageTransition>
             } />
             <Route path="/stats" element={
