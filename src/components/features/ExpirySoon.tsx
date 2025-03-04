@@ -77,6 +77,96 @@ const ExpirySoon: React.FC = () => {
               <TabsTrigger value="soon">Expiring Soon</TabsTrigger>
               <TabsTrigger value="expired">Expired</TabsTrigger>
             </TabsList>
+          
+            <TabsContent value="soon" className="animate-slide-up mt-0">
+              {expiringItems.length > 0 ? (
+                <>
+                  <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-4">
+                    <div className="flex items-start">
+                      <Lightbulb className="h-5 w-5 text-amber-500 mr-3 mt-0.5" />
+                      <div>
+                        <h3 className="font-medium text-amber-800">Action needed</h3>
+                        <p className="text-sm text-amber-700 mt-1">
+                          You have {expiringItems.length} items expiring within 3 days.
+                        </p>
+                        <Button 
+                          variant="outline" 
+                          size="sm" 
+                          className="mt-2 text-amber-700 border-amber-300 bg-amber-100/50 hover:bg-amber-100"
+                          onClick={showRecipeIdeas}
+                        >
+                          Get Recipe Ideas
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-3">
+                    {expiringItems.map(item => (
+                      <ItemCard 
+                        key={item.id} 
+                        item={item} 
+                      />
+                    ))}
+                  </div>
+                </>
+              ) : (
+                <div className="flex flex-col items-center justify-center h-full text-center py-12">
+                  <div className="bg-muted/50 h-24 w-24 rounded-full flex items-center justify-center mb-4">
+                    <Calendar className="h-10 w-10 text-muted-foreground/50" />
+                  </div>
+                  <h3 className="text-lg font-medium">No expiring items</h3>
+                  <p className="text-muted-foreground text-sm mt-1 max-w-xs">
+                    All your food items are safe for now. Great job managing your inventory!
+                  </p>
+                </div>
+              )}
+            </TabsContent>
+            
+            <TabsContent value="expired" className="animate-slide-up mt-0">
+              {expiredItems.length > 0 ? (
+                <>
+                  <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-4">
+                    <div className="flex items-start">
+                      <Lightbulb className="h-5 w-5 text-red-500 mr-3 mt-0.5" />
+                      <div>
+                        <h3 className="font-medium text-red-800">Items expired</h3>
+                        <p className="text-sm text-red-700 mt-1">
+                          {expiredItems.length} items have expired. Consider proper disposal or check if they're still usable.
+                        </p>
+                        <Button 
+                          variant="outline" 
+                          size="sm" 
+                          className="mt-2 text-red-700 border-red-300 bg-red-100/50 hover:bg-red-100"
+                          onClick={() => toast.info("Disposal options coming soon!")}
+                        >
+                          Disposal Options
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-3">
+                    {expiredItems.map(item => (
+                      <ItemCard 
+                        key={item.id} 
+                        item={item} 
+                      />
+                    ))}
+                  </div>
+                </>
+              ) : (
+                <div className="flex flex-col items-center justify-center h-full text-center py-12">
+                  <div className="bg-muted/50 h-24 w-24 rounded-full flex items-center justify-center mb-4">
+                    <Calendar className="h-10 w-10 text-muted-foreground/50" />
+                  </div>
+                  <h3 className="text-lg font-medium">No expired items</h3>
+                  <p className="text-muted-foreground text-sm mt-1 max-w-xs">
+                    You don't have any expired items. Keep up the good work!
+                  </p>
+                </div>
+              )}
+            </TabsContent>
           </Tabs>
           
           <Button 
@@ -88,94 +178,6 @@ const ExpirySoon: React.FC = () => {
             <Filter className="h-4 w-4" />
           </Button>
         </div>
-      </div>
-      
-      <div className="flex-1 overflow-auto no-scrollbar space-y-3">
-        <TabsContent value="soon" className="animate-slide-up mt-0">
-          {expiringItems.length > 0 ? (
-            <>
-              <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-4">
-                <div className="flex items-start">
-                  <Lightbulb className="h-5 w-5 text-amber-500 mr-3 mt-0.5" />
-                  <div>
-                    <h3 className="font-medium text-amber-800">Action needed</h3>
-                    <p className="text-sm text-amber-700 mt-1">
-                      You have {expiringItems.length} items expiring within 3 days.
-                    </p>
-                    <Button 
-                      variant="outline" 
-                      size="sm" 
-                      className="mt-2 text-amber-700 border-amber-300 bg-amber-100/50 hover:bg-amber-100"
-                      onClick={showRecipeIdeas}
-                    >
-                      Get Recipe Ideas
-                    </Button>
-                  </div>
-                </div>
-              </div>
-              
-              {expiringItems.map(item => (
-                <ItemCard 
-                  key={item.id} 
-                  item={item} 
-                />
-              ))}
-            </>
-          ) : (
-            <div className="flex flex-col items-center justify-center h-full text-center py-12">
-              <div className="bg-muted/50 h-24 w-24 rounded-full flex items-center justify-center mb-4">
-                <Calendar className="h-10 w-10 text-muted-foreground/50" />
-              </div>
-              <h3 className="text-lg font-medium">No expiring items</h3>
-              <p className="text-muted-foreground text-sm mt-1 max-w-xs">
-                All your food items are safe for now. Great job managing your inventory!
-              </p>
-            </div>
-          )}
-        </TabsContent>
-        
-        <TabsContent value="expired" className="animate-slide-up mt-0">
-          {expiredItems.length > 0 ? (
-            <>
-              <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-4">
-                <div className="flex items-start">
-                  <Lightbulb className="h-5 w-5 text-red-500 mr-3 mt-0.5" />
-                  <div>
-                    <h3 className="font-medium text-red-800">Items expired</h3>
-                    <p className="text-sm text-red-700 mt-1">
-                      {expiredItems.length} items have expired. Consider proper disposal or check if they're still usable.
-                    </p>
-                    <Button 
-                      variant="outline" 
-                      size="sm" 
-                      className="mt-2 text-red-700 border-red-300 bg-red-100/50 hover:bg-red-100"
-                      onClick={() => toast.info("Disposal options coming soon!")}
-                    >
-                      Disposal Options
-                    </Button>
-                  </div>
-                </div>
-              </div>
-              
-              {expiredItems.map(item => (
-                <ItemCard 
-                  key={item.id} 
-                  item={item} 
-                />
-              ))}
-            </>
-          ) : (
-            <div className="flex flex-col items-center justify-center h-full text-center py-12">
-              <div className="bg-muted/50 h-24 w-24 rounded-full flex items-center justify-center mb-4">
-                <Calendar className="h-10 w-10 text-muted-foreground/50" />
-              </div>
-              <h3 className="text-lg font-medium">No expired items</h3>
-              <p className="text-muted-foreground text-sm mt-1 max-w-xs">
-                You don't have any expired items. Keep up the good work!
-              </p>
-            </div>
-          )}
-        </TabsContent>
       </div>
     </div>
   );
