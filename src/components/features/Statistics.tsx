@@ -1,12 +1,31 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { Share2, TrendingUp, Leaf, DollarSign } from 'lucide-react';
+import { Share2, TrendingUp, Leaf, DollarSign, ChevronDown, Info, Factory } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { toast } from "sonner";
+import {
+  Tooltip as UITooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import { Input } from "@/components/ui/input";
 
 const Statistics: React.FC = () => {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [openSections, setOpenSections] = useState<Record<string, boolean>>({
+    carbon: false,
+    money: false,
+    food: false,
+  });
+
   // Sample data for demonstration
   const wasteData = [
     { month: 'Jan', amount: 12 },
@@ -19,30 +38,95 @@ const Statistics: React.FC = () => {
   
   const statsCards = [
     {
+      id: "carbon",
       title: "Carbon Saved",
       value: "18.5 kg",
       description: "CO₂ emissions prevented",
       icon: <Leaf className="h-5 w-5 text-green-500" />,
       change: "+24%",
       positive: true,
+      details: "Carbon emissions linked to food waste come from production, processing, packaging, transportation, and decomposition in landfills. Reducing food waste directly reduces these emissions.",
     },
     {
+      id: "money",
       title: "Money Saved",
       value: "$187",
       description: "Estimated savings",
       icon: <DollarSign className="h-5 w-5 text-emerald-500" />,
       change: "+32%",
       positive: true,
+      details: "This calculation is based on the average retail value of food items you've saved from waste. Better planning and consumption helps reduce grocery expenses over time.",
     },
     {
+      id: "food",
       title: "Food Saved",
       value: "35 kg",
       description: "Food waste prevented",
       icon: <TrendingUp className="h-5 w-5 text-blue-500" />,
       change: "+18%",
       positive: true,
+      details: "This tracks the total weight of food saved from being wasted through better planning, storage, and consumption. Food waste accounts for approximately 8% of global greenhouse gas emissions.",
     },
   ];
+
+  // Food impact data
+  const highImpactFoods = [
+    {
+      name: "Beef",
+      impact: "High",
+      emissions: "60 kg CO₂e per kg",
+      category: "negative",
+      details: "Requires significant land, water, and feed. Produces methane, a potent greenhouse gas."
+    },
+    {
+      name: "Lamb",
+      impact: "High",
+      emissions: "24 kg CO₂e per kg",
+      category: "negative",
+      details: "High methane emissions, large land and water footprint."
+    },
+    {
+      name: "Cheese",
+      impact: "High",
+      emissions: "13 kg CO₂e per kg",
+      category: "negative",
+      details: "Dairy production has high resource requirements and emissions."
+    },
+    {
+      name: "Lentils",
+      impact: "Low",
+      emissions: "0.9 kg CO₂e per kg",
+      category: "positive",
+      details: "Efficient protein source with minimal water and land requirements."
+    },
+    {
+      name: "Tofu",
+      impact: "Low",
+      emissions: "2 kg CO₂e per kg",
+      category: "positive",
+      details: "Plant-based protein with substantially lower emissions than animal sources."
+    },
+    {
+      name: "Seasonal Vegetables",
+      impact: "Low",
+      emissions: "0.5 kg CO₂e per kg",
+      category: "positive",
+      details: "Local, seasonal vegetables minimize transportation and storage emissions."
+    }
+  ];
+
+  const toggleSection = (id: string) => {
+    setOpenSections({
+      ...openSections,
+      [id]: !openSections[id]
+    });
+  };
+
+  const filteredFoods = highImpactFoods.filter(food => 
+    food.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    food.impact.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    food.category.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <div className="flex flex-col pt-16 pb-24 px-4 h-full overflow-auto no-scrollbar">
@@ -73,24 +157,44 @@ const Statistics: React.FC = () => {
       </div>
       
       <div className="space-y-6 animate-slide-up pb-4">
-        {/* Stats Cards */}
+        {/* Stats Cards with Collapsible Explanations */}
         <div className="grid grid-cols-1 gap-4">
-          {statsCards.map((card, index) => (
-            <Card key={index} className="p-4 border border-border/50 shadow-soft">
-              <div className="flex justify-between items-start">
-                <div>
-                  <p className="text-sm text-muted-foreground">{card.title}</p>
-                  <h3 className="text-2xl font-display font-medium mt-1">{card.value}</h3>
-                  <p className="text-xs text-muted-foreground mt-1">{card.description}</p>
+          {statsCards.map((card) => (
+            <Collapsible 
+              key={card.id}
+              open={openSections[card.id]} 
+              onOpenChange={() => toggleSection(card.id)}
+              className="w-full"
+            >
+              <Card className="p-4 border border-border/50 shadow-soft">
+                <div className="flex justify-between items-start">
+                  <div>
+                    <p className="text-sm text-muted-foreground">{card.title}</p>
+                    <h3 className="text-2xl font-display font-medium mt-1">{card.value}</h3>
+                    <p className="text-xs text-muted-foreground mt-1">{card.description}</p>
+                  </div>
+                  <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center">
+                    {card.icon}
+                  </div>
                 </div>
-                <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center">
-                  {card.icon}
+                <div className="flex justify-between items-center mt-2">
+                  <span className={`text-xs font-medium ${card.positive ? 'text-green-500' : 'text-red-500'}`}>
+                    {card.change} from last month
+                  </span>
+                  <CollapsibleTrigger asChild>
+                    <Button variant="ghost" size="sm" className="p-0 h-7 w-7">
+                      <ChevronDown 
+                        className={`h-4 w-4 transition-transform duration-200 ${openSections[card.id] ? 'rotate-180' : ''}`} 
+                      />
+                      <span className="sr-only">Toggle explanation</span>
+                    </Button>
+                  </CollapsibleTrigger>
                 </div>
-              </div>
-              <div className={`text-xs font-medium mt-2 ${card.positive ? 'text-green-500' : 'text-red-500'}`}>
-                {card.change} from last month
-              </div>
-            </Card>
+                <CollapsibleContent className="mt-3 pt-3 border-t text-sm text-muted-foreground">
+                  {card.details}
+                </CollapsibleContent>
+              </Card>
+            </Collapsible>
           ))}
         </div>
         
@@ -111,6 +215,85 @@ const Statistics: React.FC = () => {
           <p className="text-xs text-muted-foreground mt-4 text-center">
             Your food waste has decreased by 58% over the last 6 months
           </p>
+        </Card>
+        
+        {/* Food Impact Section */}
+        <Card className="p-4 border border-border/50 shadow-soft">
+          <div className="flex justify-between items-center mb-4">
+            <h3 className="font-medium">Food Environmental Impact</h3>
+            <TooltipProvider>
+              <UITooltip>
+                <TooltipTrigger asChild>
+                  <Button variant="ghost" size="icon" className="h-8 w-8">
+                    <Info className="h-4 w-4" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent className="max-w-xs">
+                  <p>Foods have different environmental impacts due to how they're grown, processed, and transported. Switching to lower-impact foods can significantly reduce your carbon footprint.</p>
+                </TooltipContent>
+              </UITooltip>
+            </TooltipProvider>
+          </div>
+          
+          <div className="mb-4">
+            <Input
+              type="search"
+              placeholder="Search foods by name or impact..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full"
+            />
+          </div>
+          
+          <div className="space-y-3">
+            <div className="grid grid-cols-3 text-xs font-medium text-muted-foreground pb-1 border-b">
+              <div>Food</div>
+              <div>Impact</div>
+              <div>CO₂ Emissions</div>
+            </div>
+            
+            {filteredFoods.length === 0 ? (
+              <p className="text-sm text-center py-4 text-muted-foreground">No foods match your search</p>
+            ) : (
+              filteredFoods.map((food, index) => (
+                <Collapsible key={index} className="w-full">
+                  <div className="grid grid-cols-3 text-sm items-center py-2 border-b border-border/30">
+                    <div className="flex items-center gap-2">
+                      {food.category === "negative" ? (
+                        <Factory className="h-4 w-4 text-red-500" />
+                      ) : (
+                        <Leaf className="h-4 w-4 text-green-500" />
+                      )}
+                      <span>{food.name}</span>
+                    </div>
+                    <div>
+                      <span 
+                        className={`px-2 py-0.5 text-xs rounded-full ${
+                          food.impact === "High" 
+                            ? "bg-red-100 text-red-700" 
+                            : "bg-green-100 text-green-700"
+                        }`}
+                      >
+                        {food.impact}
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs">{food.emissions}</span>
+                      <CollapsibleTrigger asChild>
+                        <Button variant="ghost" size="sm" className="p-0 h-7 w-7">
+                          <ChevronDown className="h-4 w-4" />
+                          <span className="sr-only">Details</span>
+                        </Button>
+                      </CollapsibleTrigger>
+                    </div>
+                  </div>
+                  <CollapsibleContent className="pl-6 pr-2 py-2 text-sm text-muted-foreground bg-muted/30 rounded-md mt-1">
+                    {food.details}
+                  </CollapsibleContent>
+                </Collapsible>
+              ))
+            )}
+          </div>
         </Card>
         
         {/* Environmental Impact */}
