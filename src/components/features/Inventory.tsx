@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Search, Filter, PlusCircle, Calendar, Lightbulb } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -6,12 +5,13 @@ import { Input } from '@/components/ui/input';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import ItemCard, { FoodItem } from '@/components/ui/ItemCard';
 import { toast } from "sonner";
+import { Badge } from '@/components/ui/badge';
+import { cn } from '@/lib/utils';
 
 const Inventory: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [activeTab, setActiveTab] = useState("all");
   
-  // Sample data for demonstration
   const inventoryItems: FoodItem[] = [
     {
       id: '1',
@@ -45,19 +45,16 @@ const Inventory: React.FC = () => {
     }
   ];
   
-  // Filter items by search term
   const filteredItems = inventoryItems.filter(item => 
     item.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
     item.category.toLowerCase().includes(searchTerm.toLowerCase())
   );
   
-  // Filter items for "expiring soon" tab (items expiring within 3 days)
   const expiringItems = filteredItems.filter(item => {
     const daysToExpiry = Math.floor((item.expiryDate.getTime() - Date.now()) / (1000 * 60 * 60 * 24));
     return daysToExpiry >= 0 && daysToExpiry <= 3;
   });
   
-  // Filter items for "expired" tab
   const expiredItems = filteredItems.filter(item => {
     const daysToExpiry = Math.floor((item.expiryDate.getTime() - Date.now()) / (1000 * 60 * 60 * 24));
     return daysToExpiry < 0;
@@ -110,9 +107,56 @@ const Inventory: React.FC = () => {
         
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger value="all">All Items</TabsTrigger>
-            <TabsTrigger value="soon">Expiring Soon</TabsTrigger>
-            <TabsTrigger value="expired">Expired</TabsTrigger>
+            <TabsTrigger 
+              value="all" 
+              className={cn(
+                "transition-colors",
+                activeTab === "all" 
+                  ? "bg-green-50 text-green-700 data-[state=active]:bg-green-100" 
+                  : "hover:text-green-600 hover:bg-green-50/50"
+              )}
+            >
+              All Items
+              {filteredItems.length > 0 && (
+                <Badge variant="outline" className="ml-2 bg-green-100 text-green-700 border-green-200">
+                  {filteredItems.length}
+                </Badge>
+              )}
+            </TabsTrigger>
+            
+            <TabsTrigger 
+              value="soon" 
+              className={cn(
+                "transition-colors",
+                activeTab === "soon" 
+                  ? "bg-amber-50 text-amber-700 data-[state=active]:bg-amber-100" 
+                  : "hover:text-amber-600 hover:bg-amber-50/50"
+              )}
+            >
+              Expiring Soon
+              {expiringItems.length > 0 && (
+                <Badge variant="outline" className="ml-2 bg-amber-100 text-amber-700 border-amber-200">
+                  {expiringItems.length}
+                </Badge>
+              )}
+            </TabsTrigger>
+            
+            <TabsTrigger 
+              value="expired" 
+              className={cn(
+                "transition-colors",
+                activeTab === "expired" 
+                  ? "bg-red-50 text-red-700 data-[state=active]:bg-red-100" 
+                  : "hover:text-red-600 hover:bg-red-50/50"
+              )}
+            >
+              Expired
+              {expiredItems.length > 0 && (
+                <Badge variant="outline" className="ml-2 bg-red-100 text-red-700 border-red-200">
+                  {expiredItems.length}
+                </Badge>
+              )}
+            </TabsTrigger>
           </TabsList>
         
           <TabsContent value="all" className="animate-slide-up mt-0">
