@@ -1,3 +1,4 @@
+
 import React, { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Camera, ChevronDown, Info, Zap, Image as ImageIcon, Barcode, Plus } from 'lucide-react';
@@ -35,7 +36,8 @@ const Scanner: React.FC = () => {
       img.src = URL.createObjectURL(file);
       await img.decode(); // Ensure image is loaded
       
-      const items = await recognizeFoodItems(img);
+      // Pass explicit dtype (float32) for better precision on wasm devices
+      const items = await recognizeFoodItems(img, 'float32');
       
       setRecognizedItems(items.map(item => ({
         ...item,

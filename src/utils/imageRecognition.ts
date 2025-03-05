@@ -7,10 +7,24 @@ export interface RecognizedItem {
   bbox?: [number, number, number, number]; // [x, y, width, height]
 }
 
-export const recognizeFoodItems = async (imageElement: HTMLImageElement): Promise<RecognizedItem[]> => {
+/**
+ * Recognizes food items in an image using the Hugging Face transformers library
+ * @param imageElement The image element to analyze
+ * @param dtype Optional data type for the model (defaults to 'float32' for wasm devices)
+ * @returns Array of recognized items with confidence scores
+ */
+export const recognizeFoodItems = async (
+  imageElement: HTMLImageElement, 
+  dtype: 'float32' | 'float16' | 'int8' | 'q8' = 'float32'
+): Promise<RecognizedItem[]> => {
   try {
+    console.log(`Loading object detection model with dtype: ${dtype}`);
+    
     const detector = await pipeline('object-detection', 'Xenova/yolos-tiny', {
-      // Using CPU as fallback with preference for WebGPU when available
+      // Explicitly set dtype instead of relying on defaults
+      dtype: dtype,
+      // You can also specify the device if needed (e.g., 'cpu', 'webgpu', 'wasm')
+      device: 'wasm',
     });
     
     // Convert HTMLImageElement to URL for the detector
