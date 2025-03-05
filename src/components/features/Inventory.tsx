@@ -33,7 +33,7 @@ const Inventory: React.FC = () => {
       name: 'Bread',
       category: 'Bakery',
       expiryDate: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000), // 2 days from now
-      imageUrl: 'https://images.unsplash.com/photo-1549931319-a545dcf3bc7c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YnJlYWR8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60'
+      imageUrl: 'https://www.theperfectloaf.com/wp-content/uploads/2023/05/theperfectloaf_ai_generated_sourdough_bread_recipe_featured-1920x1280.jpg'
     },
     {
       id: '4',
