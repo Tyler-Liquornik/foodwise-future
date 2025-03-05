@@ -120,6 +120,9 @@ const Scanner: React.FC = () => {
   return (
       <div className="flex flex-col items-center justify-center h-full max-w-md mx-auto px-4 pt-16 pb-24">
         <div className="text-center mb-6 animate-slide-down">
+          <span className="bg-primary/10 text-primary text-xs font-medium px-3 py-1 rounded-full">
+            Scan Items
+          </span>
           <h1 className="text-2xl font-display font-medium mt-2">
             Add Food to Your Inventory
           </h1>
