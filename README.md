@@ -1,69 +1,76 @@
-# Welcome to your Lovable project
+# FoodTrack: Smart Food Waste Reduction Solution
 
-## Project info
+## Overview
 
-**URL**: https://lovable.dev/projects/9d9f5440-b714-4c1f-9813-4dc7a412ab5a
+FoodTrack is an innovative mobile application designed to combat food waste by empowering users to track, manage, and optimize their food consumption. By leveraging cutting-edge AI and user-friendly scanning technology, the app helps individuals and businesses reduce food waste, save money, and contribute to environmental sustainability.
 
-## How can I edit this code?
+## 🌟 Key Features
 
-There are several ways of editing your application.
+- **Barcode & Image Scanning**: Easily log grocery items using barcode or image recognition
+- **AI-Powered Expiry Predictions**: Intelligent shelf-life tracking and expiration alerts
+- **Smart Recipe Suggestions**: Generate recipes using ingredients approaching expiration
+- **Donation Recommendations**: Connect users with local food banks and community resources
+- **Sustainability Tracking**: Monitor personal food waste and carbon footprint reduction
 
-**Use Lovable**
+## 🚀 Tech Stack
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/9d9f5440-b714-4c1f-9813-4dc7a412ab5a) and start prompting.
+- **Frontend**: React.js
+- **UI Components**: ShadCN (Standardized UI library)
+- **Hosting**: Netlify
+- **AI Technology**: HuggingFace (Image Recognition)
+- **Database & Backend**: Supabase (Scalable Solution)
 
-Changes made via Lovable will be committed automatically to this repo.
+## 🛠 Prerequisites
 
-**Use your preferred IDE**
+- Node.js (v16+)
+- npm or yarn
+- Modern web browser
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## 📦 Installation
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+1. Clone the repository
+```bash
+git clone https://github.com/yourusername/foodtrack.git
 ```
 
-**Edit a file directly in GitHub**
+2. Install dependencies
+```bash
+cd foodtrack
+npm install
+```
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+3. Start development server
+```bash
+npm start
+```
 
-**Use GitHub Codespaces**
+## 🌍 Environmental Impact
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+FoodTrack helps users:
+- Reduce personal food waste
+- Lower carbon emissions
+- Save money on groceries
+- Support community food sharing
 
-## What technologies are used for this project?
+## 🔮 Future Roadmap
 
-This project is built with .
+- Enhanced AI prediction accuracy
+- Expanded donation network integration
+- Personalized nutrition insights
+- Corporate sustainability partnerships
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## 🤝 Contributing
 
-## How can I deploy this project?
+Interested in contributing? Great! Please read our contributing guidelines before getting started.
 
-Simply open [Lovable](https://lovable.dev/projects/9d9f5440-b714-4c1f-9813-4dc7a412ab5a) and click on Share -> Publish.
+## 📄 License
 
-## I want to use a custom domain - is that possible?
+[Insert License Type]
 
-We don't support custom domains (yet). If you want to deploy your project under your own domain then we recommend using Netlify. Visit our docs for more details: [Custom domains](https://docs.lovable.dev/tips-tricks/custom-domain/)
+## 💡 Inspired By
+
+A solution driven by the mission to reduce food waste and create more sustainable food consumption habits.
+
+---
+
+**Made with ❤️ by the FoodTrack Team**
