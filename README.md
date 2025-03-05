@@ -23,7 +23,7 @@ This is the scope of the technology that was actually implemented in the 24 hour
 - **AI Technology**: HuggingFace (Image Recognition)
 
 At scale we would like to add:
-- **Backend**: PostgreSQL database managed through Supabase Cloud for scalable, reliable data storage and complex query support
+- **Backend**: PostgreSQL database managed through Supabase Cloud for data storage
 - **Authentication**: Supabase Auth for secure, multi-method user management with robust privacy controls
 - **Payments & Donations**: Stripe integration enables seamless, tax-deductible charitable contributions
 - **Google Ads Integration**: Targeted ad placement to generate revenue and support app sustainability efforts
