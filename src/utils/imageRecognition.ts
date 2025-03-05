@@ -46,3 +46,17 @@ export const recognizeFoodItems = async (
     throw error;
   }
 };
+
+/**
+ * Converts a data URL to an Image element
+ * @param dataUrl The data URL to convert
+ * @returns A Promise that resolves to an HTMLImageElement
+ */
+export const dataUrlToImage = (dataUrl: string): Promise<HTMLImageElement> => {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => resolve(img);
+    img.onerror = reject;
+    img.src = dataUrl;
+  });
+};
