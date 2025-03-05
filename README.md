@@ -1,4 +1,4 @@
-# FoodTrack: Smart Food Waste Reduction Solution
+# FoodWise: Smart Food Waste Reduction Solution
 
 ## Overview
 
@@ -59,18 +59,8 @@ FoodTrack helps users:
 - Personalized nutrition insights
 - Corporate sustainability partnerships
 
-## 🤝 Contributing
-
-Interested in contributing? Great! Please read our contributing guidelines before getting started.
-
-## 📄 License
-
-[Insert License Type]
-
 ## 💡 Inspired By
 
 A solution driven by the mission to reduce food waste and create more sustainable food consumption habits.
 
----
 
-**Made with ❤️ by the FoodTrack Team**
