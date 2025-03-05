@@ -1,5 +1,5 @@
 
-import { pipeline, type ObjectDetectionOutput } from '@huggingface/transformers';
+import { pipeline } from '@huggingface/transformers';
 
 export interface RecognizedItem {
   name: string;
@@ -11,18 +11,22 @@ export const recognizeFoodItems = async (imageElement: HTMLImageElement): Promis
   try {
     const detector = await pipeline('object-detection', 'Xenova/yolos-tiny', {
       // Using CPU as fallback with preference for WebGPU when available
-      quantized: false,
     });
     
     // Convert HTMLImageElement to URL for the detector
     const imageUrl = imageElement.src;
     const results = await detector(imageUrl);
     
-    return Array.isArray(results) ? results.map(result => ({
-      name: result.label,
-      confidence: result.score,
-      bbox: result.box ? [result.box.xmin, result.box.ymin, result.box.width, result.box.height] : undefined
-    })) : [];
+    if (!Array.isArray(results)) return [];
+    
+    return results.map(result => {
+      const box = result.box as { xmin: number; ymin: number; width: number; height: number } | undefined;
+      return {
+        name: String(result.label),
+        confidence: Number(result.score),
+        bbox: box ? [box.xmin, box.ymin, box.width, box.height] : undefined
+      } as RecognizedItem;
+    });
   } catch (error) {
     console.error('Error in food recognition:', error);
     throw error;

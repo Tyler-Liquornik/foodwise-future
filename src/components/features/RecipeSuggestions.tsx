@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -18,11 +17,10 @@ interface Recipe {
   ingredients: Ingredient[];
   prepTime: number;
   difficulty: 'Easy' | 'Medium' | 'Hard';
-  expiryScore: number; // Higher means uses more expiring ingredients
+  expiryScore: number;
 }
 
 const RecipeSuggestions: React.FC<{ ingredients: Ingredient[] }> = ({ ingredients }) => {
-  // This would normally come from an API based on the ingredients
   const suggestedRecipes: Recipe[] = [
     {
       id: '1',
@@ -32,11 +30,10 @@ const RecipeSuggestions: React.FC<{ ingredients: Ingredient[] }> = ({ ingredient
         { name: 'Carrots', expiryDate: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000), isExpiringSoon: false }
       ],
       prepTime: 20,
-      difficulty: 'Easy', // Explicitly using one of the allowed string literals
+      difficulty: 'Easy' as const,
       expiryScore: 0.8
-    },
-    // ... more recipes would be generated based on inventory
-  ].sort((a, b) => b.expiryScore - a.expiryScore); // Sort by expiry score
+    }
+  ].sort((a, b) => b.expiryScore - a.expiryScore);
 
   return (
     <div className="space-y-4">
