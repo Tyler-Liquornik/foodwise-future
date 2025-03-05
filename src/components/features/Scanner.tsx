@@ -124,8 +124,8 @@ const Scanner: React.FC = () => {
           and no uploaded image
         */}
           {!isScanning && !uploadedImage && (
-              <div className="absolute bottom-24 left-1/2 -translate-x-1/2 bg-black/50 text-white text-center px-6 py-2 rounded-lg z-10">
-                <p className="text-sm font-medium">Position item in frame</p>
+              <div className="absolute bottom-28 left-1/2 -translate-x-1/2 bg-black/50 text-white text-center px-4 py-2 rounded-lg z-10 w-[275px]">
+                <p className="text-sm font-medium">Position item or barcode in frame</p>
                 <p className="text-xs">Tap the button below to scan or upload</p>
               </div>
           )}
@@ -143,7 +143,7 @@ const Scanner: React.FC = () => {
                 disabled={isScanning}
             >
               <Barcode className="h-4 w-4" />
-              {isScanning ? "Scanning..." : "Scan Barcode"}
+              {isScanning ? "Scanning..." : "Scan Item"}
             </Button>
 
             <Button
