@@ -51,7 +51,7 @@ npm install
 
 3. Start development server
 ```bash
-npm run dv
+npm run dev
 ```
 
 ## 🌍 Environmental Impact
