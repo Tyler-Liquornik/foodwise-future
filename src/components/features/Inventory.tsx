@@ -187,18 +187,18 @@ const Inventory: React.FC = () => {
         
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger 
-              value="all" 
+            <TabsTrigger
+              value="all"
               className={cn(
                 "transition-colors",
-                activeTab === "all" 
-                  ? "bg-green-50 text-green-700 data-[state=active]:bg-green-100" 
+                activeTab === "all"
+                  ? "bg-green-50 text-green-700 data-[state=active]:bg-green-100"
                   : "hover:text-green-600 hover:bg-green-50/50"
               )}
             >
-              All Items
+              <span className="text-xs sm:text-base">All Items</span>
               {inventoryItems.length > 0 && (
-                <Badge variant="outline" className="ml-2 bg-green-100 text-green-700 border-green-200">
+                  <Badge variant="outline" className="ml-2 bg-green-100 text-green-700 border-green-200">
                   {inventoryItems.length}
                 </Badge>
               )}
@@ -213,9 +213,9 @@ const Inventory: React.FC = () => {
                   : "hover:text-amber-600 hover:bg-amber-50/50"
               )}
             >
-              Expiring Soon
+              <span className="text-xs sm:text-base">Expiring Soon</span>
               {expiringItems.length > 0 && (
-                <Badge variant="outline" className="ml-2 bg-amber-100 text-amber-700 border-amber-200">
+                  <Badge variant="outline" className="ml-2 bg-amber-100 text-amber-700 border-amber-200">
                   {expiringItems.length}
                 </Badge>
               )}
@@ -230,9 +230,9 @@ const Inventory: React.FC = () => {
                   : "hover:text-red-600 hover:bg-red-50/50"
               )}
             >
-              Expired
+              <span className="text-xs sm:text-base">Expired</span>
               {expiredItems.length > 0 && (
-                <Badge variant="outline" className="ml-2 bg-red-100 text-red-700 border-red-200">
+                  <Badge variant="outline" className="ml-2 bg-red-100 text-red-700 border-red-200">
                   {expiredItems.length}
                 </Badge>
               )}
