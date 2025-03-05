@@ -20,6 +20,7 @@ The challenge FoodWise addressed was to create an AI-powered solution to address
 
 This is the scope of the technology that was actually implemented in the 24 hour period of the assignemnt: 
 - **Frontend**: React.js via Lovable.dev
+- **Webcam API** react-webcam allows streaming webcam video
 - **AI Technology**: HuggingFace (Image Recognition)
 
 At scale we would like to add:
