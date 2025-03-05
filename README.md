@@ -2,7 +2,11 @@
 
 ## Overview
 
-FoodTrack is an innovative mobile application designed to combat food waste by empowering users to track, manage, and optimize their food consumption. By leveraging cutting-edge AI and user-friendly scanning technology, the app helps individuals and businesses reduce food waste, save money, and contribute to environmental sustainability.
+FoodWise is an innovative mobile application designed to combat food waste by empowering users to track, manage, and optimize their food consumption. By leveraging cutting-edge AI and user-friendly scanning technology, the app helps individuals and businesses reduce food waste, save money, and contribute to environmental sustainability.
+
+FoodWise was designed as a scalable solution to address food wastage, particularly with students in mind. 
+It was completely designed in less than 24 hours for a project for Ivey's Leveraging Information Technology 3322K.
+The challenge FoodWise addressed was to create an AI-powered solution to addressed a problem in environmental sustainability.
 
 ## 🌟 Key Features
 
@@ -14,34 +18,40 @@ FoodTrack is an innovative mobile application designed to combat food waste by e
 
 ## 🚀 Tech Stack
 
-- **Frontend**: React.js
-- **UI Components**: ShadCN (Standardized UI library)
-- **Hosting**: Netlify
+This is the scope of the technology that was actually implemented in the 24 hour period of the assignemnt: 
+- **Frontend**: React.js via Lovable.dev
 - **AI Technology**: HuggingFace (Image Recognition)
-- **Database & Backend**: Supabase (Scalable Solution)
+
+At scale we would like to add:
+- **Backend**: PostgreSQL database managed through Supabase Cloud for scalable, reliable data storage and complex query support
+- **Authentication**: Supabase Auth for secure, multi-method user management with robust privacy controls
+- **Payments & Donations**: Stripe integration enabling seamless, tax-deductible charitable contributions and app monetization
+- **Google Ads Integration**: Targeted ad placement to generate revenue and support app sustainability efforts
+- **Barcode API**: OpenFoodFacts and GS1 integration for comprehensive global product information and tracking
+- **AI Technology**: Custom trained AI model that can more accurately estimate food quality and expiry times.
 
 ## 🛠 Prerequisites
 
 - Node.js (v16+)
-- npm or yarn
+- npm
 - Modern web browser
 
 ## 📦 Installation
 
 1. Clone the repository
 ```bash
-git clone https://github.com/yourusername/foodtrack.git
+git clone https://github.com/<yourusername>/foodwise-future.git
 ```
 
 2. Install dependencies
 ```bash
-cd foodtrack
+cd foodwise-future
 npm install
 ```
 
 3. Start development server
 ```bash
-npm start
+npm run dv
 ```
 
 ## 🌍 Environmental Impact
@@ -58,9 +68,5 @@ FoodTrack helps users:
 - Expanded donation network integration
 - Personalized nutrition insights
 - Corporate sustainability partnerships
-
-## 💡 Inspired By
-
-A solution driven by the mission to reduce food waste and create more sustainable food consumption habits.
 
 
