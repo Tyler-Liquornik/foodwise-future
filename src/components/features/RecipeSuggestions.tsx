@@ -32,7 +32,7 @@ const RecipeSuggestions: React.FC<{ ingredients: Ingredient[] }> = ({ ingredient
         { name: 'Carrots', expiryDate: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000), isExpiringSoon: false }
       ],
       prepTime: 20,
-      difficulty: 'Easy',
+      difficulty: 'Easy', // Explicitly using one of the allowed string literals
       expiryScore: 0.8
     },
     // ... more recipes would be generated based on inventory
