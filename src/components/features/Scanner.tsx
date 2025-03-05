@@ -1,9 +1,10 @@
 
 import React, { useState, useRef, useEffect } from 'react';
-import { Camera, Barcode, Image as ImageIcon, Plus, Info } from 'lucide-react';
+import { Camera, Barcode, Image as ImageIcon, Plus, Info, GalleryHorizontal } from 'lucide-react';
 import { toast } from "sonner";
 import { Button } from '@/components/ui/button';
 import { recognizeFoodItems, RecognizedItem, dataUrlToImage } from '@/utils/imageRecognition';
+import { isMobileDevice, getPlatformTerms } from '@/lib/utils';
 import {
   Dialog,
   DialogContent,
@@ -30,16 +31,11 @@ const Scanner: React.FC = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
+  const { tap, cameraAccessText, cameraIcon } = getPlatformTerms();
 
   // Check if device is mobile
   useEffect(() => {
-    const checkMobile = () => {
-      const userAgent = navigator.userAgent || navigator.vendor;
-      const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
-      setIsMobile(isMobileDevice);
-    };
-    
-    checkMobile();
+    setIsMobile(isMobileDevice());
   }, []);
 
   // Clean up camera stream when component unmounts
@@ -153,55 +149,37 @@ const Scanner: React.FC = () => {
     // Use setTimeout(…, 0) to yield to the browser for the animation.
     setTimeout(async () => {
       try {
-        const reader = new FileReader();
-        reader.onload = async (e) => {
-          if (e.target?.result) {
-            const imgSrc = e.target.result as string;
-            const img = document.createElement('img');
-            img.src = imgSrc;
-            
-            await new Promise((resolve) => {
-              img.onload = resolve;
-            });
-            
-            setUploadedImage(imgSrc);
-            
-            // Call the Hugging Face service
-            const items = await recognizeFoodItems(img, 'fp32');
-            
-            setRecognizedItems(items.map(item => ({
-              ...item,
-              id: crypto.randomUUID(),
-            })));
-            
-            setShowResults(true);
-            toast.success(`Found ${items.length} items in image`);
-          }
-        };
-        reader.readAsDataURL(file);
+        const img = new Image();
+        img.src = URL.createObjectURL(file);
+        await img.decode(); // Wait for the image to load
+
+        setUploadedImage(img.src);
+
+        // Call the Hugging Face service asynchronously.
+        const items = await recognizeFoodItems(img, 'fp32');
+
+        setRecognizedItems(items.map(item => ({
+          ...item,
+          id: crypto.randomUUID(),
+        })));
+        setShowResults(true);
+        toast.success(`Found ${items.length} items in image`);
       } catch (error) {
         toast.error("Error processing image");
         console.error(error);
       } finally {
+        // Stop scanning (and the green bar animation) once processing is done.
         setIsScanning(false);
       }
     }, 0);
   };
 
-  const handleScan = async () => {
-    if (cameraActive) {
-      // If camera is active, capture the current frame
-      captureImage();
-    } else {
-      // If camera is not active, start it
+  const handlePreviewAreaClick = async () => {
+    if (!cameraActive && !uploadedImage) {
       await startCamera();
+    } else if (cameraActive) {
+      captureImage();
     }
-  };
-
-  const addItemsToInventory = () => {
-    toast.success(`Added ${recognizedItems.length} items to inventory`);
-    setShowResults(false);
-    setRecognizedItems([]);
   };
 
   const resetCamera = () => {
@@ -211,6 +189,12 @@ const Scanner: React.FC = () => {
       streamRef.current.getTracks().forEach(track => track.stop());
       streamRef.current = null;
     }
+  };
+
+  const addItemsToInventory = () => {
+    toast.success(`Added ${recognizedItems.length} items to inventory`);
+    setShowResults(false);
+    setRecognizedItems([]);
   };
 
   return (
@@ -224,7 +208,11 @@ const Scanner: React.FC = () => {
           </p>
         </div>
 
-        <div className="w-full aspect-square relative mb-8 rounded-xl overflow-hidden shadow-medium">
+        {/* Interactive Preview Area */}
+        <div 
+          className="w-full aspect-square relative mb-8 rounded-xl overflow-hidden shadow-medium cursor-pointer"
+          onClick={handlePreviewAreaClick}
+        >
           {/* Camera View or Image Preview */}
           <div className="h-full w-full bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center">
             {cameraActive && videoRef.current ? (
@@ -259,14 +247,11 @@ const Scanner: React.FC = () => {
               </div>
           )}
 
-          {/*
-          "Position barcode" instructions, only show if not scanning,
-          no uploaded image, and camera is not active
-        */}
+          {/* Info text for preview area */}
           {!isScanning && !uploadedImage && !cameraActive && (
               <div className="absolute bottom-28 left-1/2 -translate-x-1/2 bg-black/50 text-white text-center px-4 py-2 rounded-lg z-10 w-[275px]">
-                <p className="text-sm font-medium">Position item or barcode in frame</p>
-                <p className="text-xs">Tap the button below to scan or upload</p>
+                <p className="text-sm font-medium">{tap} here to activate camera</p>
+                <p className="text-xs">Or use the buttons below</p>
               </div>
           )}
 
@@ -279,7 +264,7 @@ const Scanner: React.FC = () => {
             <Button
                 size="lg"
                 className="w-full gap-2"
-                onClick={handleScan}
+                onClick={cameraActive ? captureImage : handlePreviewAreaClick}
                 disabled={isScanning}
             >
               <Barcode className="h-4 w-4" />
@@ -299,8 +284,12 @@ const Scanner: React.FC = () => {
                 }}
                 disabled={isScanning}
             >
-              <ImageIcon className="h-4 w-4" />
-              {uploadedImage || cameraActive ? "Reset" : "Upload Photo"}
+              {cameraIcon === 'GalleryHorizontal' ? (
+                <GalleryHorizontal className="h-4 w-4" />
+              ) : (
+                <ImageIcon className="h-4 w-4" />
+              )}
+              {uploadedImage || cameraActive ? "Reset" : cameraAccessText}
             </Button>
             <input
                 type="file"
