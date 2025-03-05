@@ -25,7 +25,7 @@ This is the scope of the technology that was actually implemented in the 24 hour
 At scale we would like to add:
 - **Backend**: PostgreSQL database managed through Supabase Cloud for scalable, reliable data storage and complex query support
 - **Authentication**: Supabase Auth for secure, multi-method user management with robust privacy controls
-- **Payments & Donations**: Stripe integration enabling seamless, tax-deductible charitable contributions and app monetization
+- **Payments & Donations**: Stripe integration enables seamless, tax-deductible charitable contributions
 - **Google Ads Integration**: Targeted ad placement to generate revenue and support app sustainability efforts
 - **Barcode API**: OpenFoodFacts and GS1 integration for comprehensive global product information and tracking
 - **AI Technology**: Custom trained AI model that can more accurately estimate food quality and expiry times.
