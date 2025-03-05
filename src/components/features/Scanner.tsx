@@ -250,8 +250,8 @@ const Scanner: React.FC = () => {
           {/* Info text for preview area */}
           {!isScanning && !uploadedImage && !cameraActive && (
               <div className="absolute bottom-28 left-1/2 -translate-x-1/2 bg-black/50 text-white text-center px-4 py-2 rounded-lg z-10 w-[275px]">
-                <p className="text-sm font-medium">{tap} here to activate camera</p>
-                <p className="text-xs">Or use the buttons below</p>
+                <p className="text-sm font-medium">{tap} Here to Activate Camera</p>
+                <p className="text-xs">Or Use the Buttons Below</p>
               </div>
           )}
 
