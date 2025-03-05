@@ -10,12 +10,12 @@ export interface RecognizedItem {
 /**
  * Recognizes food items in an image using the Hugging Face transformers library
  * @param imageElement The image element to analyze
- * @param dtype Optional data type for the model (defaults to 'float32' for wasm devices)
+ * @param dtype Optional data type for the model (defaults to 'fp32' for wasm devices)
  * @returns Array of recognized items with confidence scores
  */
 export const recognizeFoodItems = async (
   imageElement: HTMLImageElement, 
-  dtype: 'float32' | 'float16' | 'int8' | 'q8' = 'float32'
+  dtype: 'fp32' | 'fp16' | 'int8' | 'q8' = 'fp32'
 ): Promise<RecognizedItem[]> => {
   try {
     console.log(`Loading object detection model with dtype: ${dtype}`);

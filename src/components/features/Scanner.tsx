@@ -36,8 +36,8 @@ const Scanner: React.FC = () => {
       img.src = URL.createObjectURL(file);
       await img.decode(); // Ensure image is loaded
       
-      // Pass explicit dtype (float32) for better precision on wasm devices
-      const items = await recognizeFoodItems(img, 'float32');
+      // Pass explicit dtype (fp32) for better precision on wasm devices
+      const items = await recognizeFoodItems(img, 'fp32');
       
       setRecognizedItems(items.map(item => ({
         ...item,
