@@ -1,17 +1,61 @@
-
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { Camera, ChevronDown, Info, Zap } from 'lucide-react';
+import { Camera, ChevronDown, Info, Zap, Image as ImageIcon, Barcode, Plus } from 'lucide-react';
 import { toast } from "sonner";
 import { Button } from '@/components/ui/button';
+import { recognizeFoodItems, RecognizedItem } from '@/utils/imageRecognition';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Badge } from '@/components/ui/badge';
+
+interface ScannedItem extends RecognizedItem {
+  id: string;
+  expiryDate?: Date;
+  category?: string;
+}
 
 const Scanner: React.FC = () => {
   const [isScanning, setIsScanning] = useState(false);
+  const [showResults, setShowResults] = useState(false);
+  const [recognizedItems, setRecognizedItems] = useState<ScannedItem[]>([]);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  
+  const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+    
+    setIsScanning(true);
+    try {
+      const img = new Image();
+      img.src = URL.createObjectURL(file);
+      await img.decode(); // Ensure image is loaded
+      
+      const items = await recognizeFoodItems(img);
+      
+      setRecognizedItems(items.map(item => ({
+        ...item,
+        id: crypto.randomUUID(),
+      })));
+      
+      setShowResults(true);
+      toast.success(`Found ${items.length} items in image`);
+    } catch (error) {
+      toast.error("Error processing image");
+      console.error(error);
+    } finally {
+      setIsScanning(false);
+    }
+  };
 
   const handleScan = () => {
     setIsScanning(true);
     
-    // Simulate scanning process
+    // Simulate barcode scanning process
     setTimeout(() => {
       setIsScanning(false);
       toast.success("Item added to inventory", {
@@ -22,6 +66,13 @@ const Scanner: React.FC = () => {
         },
       });
     }, 2000);
+  };
+
+  const addItemsToInventory = () => {
+    // Here we would add items to the inventory
+    toast.success(`Added ${recognizedItems.length} items to inventory`);
+    setShowResults(false);
+    setRecognizedItems([]);
   };
 
   return (
@@ -62,47 +113,92 @@ const Scanner: React.FC = () => {
         
         <div className="absolute inset-0 border-2 border-white/40 rounded-xl z-20" />
         
-        {/* Camera preview placeholder */}
         <div className="h-full w-full bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center">
           <Camera className="h-16 w-16 text-white/20" />
         </div>
       </div>
 
       <div className="w-full flex flex-col gap-3 animate-slide-up">
-        <Button 
-          size="lg" 
-          className="w-full gap-2"
-          onClick={handleScan}
-          disabled={isScanning}
-        >
-          <Zap className="h-4 w-4" />
-          {isScanning ? "Scanning..." : "Scan Barcode"}
-        </Button>
-        
-        <div className="flex gap-2">
+        <div className="grid grid-cols-2 gap-2">
           <Button 
-            variant="secondary" 
-            className="flex-1"
-            onClick={() => toast.info("Manual entry coming soon!")}
+            size="lg" 
+            className="w-full gap-2"
+            onClick={handleScan}
+            disabled={isScanning}
           >
-            Enter Manually
+            <Barcode className="h-4 w-4" />
+            {isScanning ? "Scanning..." : "Scan Barcode"}
           </Button>
           
           <Button 
-            variant="outline" 
-            size="icon"
-            onClick={() => toast.info("Scanner tips: Position the barcode within the frame and ensure adequate lighting.")}
+            size="lg"
+            variant="secondary"
+            className="w-full gap-2"
+            onClick={() => fileInputRef.current?.click()}
+            disabled={isScanning}
           >
-            <Info className="h-4 w-4" />
+            <ImageIcon className="h-4 w-4" />
+            Scan Image
           </Button>
+          <input
+            type="file"
+            ref={fileInputRef}
+            className="hidden"
+            accept="image/*"
+            onChange={handleImageUpload}
+          />
         </div>
         
-        <div className="mt-8 text-center">
-          <div className="flex items-center justify-center text-muted-foreground">
-            <p className="text-xs">Recently scanned items</p>
-            <ChevronDown className="h-4 w-4 ml-1" />
-          </div>
-        </div>
+        <Button 
+          variant="outline" 
+          className="w-full gap-2"
+          onClick={() => toast.info("Manual entry coming soon!")}
+        >
+          <Plus className="h-4 w-4" />
+          Enter Manually
+        </Button>
+        
+        <Button 
+          variant="ghost" 
+          size="icon"
+          className="self-center"
+          onClick={() => toast.info("Scanner tips: Position the barcode within the frame and ensure adequate lighting.")}
+        >
+          <Info className="h-4 w-4" />
+        </Button>
+        
+        <Dialog open={showResults} onOpenChange={setShowResults}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Recognized Items</DialogTitle>
+              <DialogDescription>
+                Review the items detected in your image
+              </DialogDescription>
+            </DialogHeader>
+            
+            <div className="space-y-4">
+              {recognizedItems.map((item) => (
+                <div key={item.id} className="flex items-center justify-between p-3 bg-secondary/20 rounded-lg">
+                  <div>
+                    <p className="font-medium">{item.name}</p>
+                    <Badge variant="secondary" className="mt-1">
+                      {Math.round(item.confidence * 100)}% confidence
+                    </Badge>
+                  </div>
+                </div>
+              ))}
+            </div>
+            
+            <div className="flex justify-end gap-2 mt-4">
+              <Button variant="ghost" onClick={() => setShowResults(false)}>
+                Cancel
+              </Button>
+              <Button onClick={addItemsToInventory}>
+                Add to Inventory
+              </Button>
+            </div>
+          </DialogContent>
+        </Dialog>
       </div>
     </div>
   );
