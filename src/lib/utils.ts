@@ -24,7 +24,7 @@ export function getPlatformTerms() {
   const isMobile = isMobileDevice()
   
   return {
-    tap: isMobile ? "tap" : "click",
+    tap: isMobile ? "Tap" : "Click",
     cameraAccessText: isMobile ? "Access Camera Roll" : "Upload Photo",
     cameraIcon: isMobile ? "GalleryHorizontal" : "ImageIcon"
   }
