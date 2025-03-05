@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -126,6 +125,11 @@ export default {
 				'pulse-subtle': {
 					'0%, 100%': { opacity: '1' },
 					'50%': { opacity: '0.85' }
+				},
+				// New scanning bar animation
+				'scanning-bar': {
+					'0%, 100%': { transform: 'translateY(-4000%)' },
+					'50%': { transform: 'translateY(4000%)' }
 				}
 			},
 			animation: {
@@ -136,9 +140,12 @@ export default {
 				'slide-up': 'slide-up 0.4s ease-out',
 				'slide-down': 'slide-down 0.4s ease-out',
 				'scale-in': 'scale-in 0.4s ease-out',
-				'pulse-subtle': 'pulse-subtle 2s ease-in-out infinite'
+				'pulse-subtle': 'pulse-subtle 2s ease-in-out infinite',
+				// New scanning bar animation
+				'scanning-bar': 'scanning-bar 2.5s linear infinite'
 			}
 		}
 	},
+	// eslint-disable-next-line @typescript-eslint/no-require-imports
 	plugins: [require("tailwindcss-animate")],
 } satisfies Config;

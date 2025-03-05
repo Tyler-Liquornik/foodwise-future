@@ -34,7 +34,7 @@ const Inventory: React.FC = () => {
     },
     {
       id: '2',
-      name: 'Apples',
+      name: 'Apple',
       category: 'Fruit',
       expiryDate: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000), // 10 days from now
       imageUrl: 'https://images.unsplash.com/photo-1570913149827-d2ac84ab3f9a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YXBwbGV8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60',
