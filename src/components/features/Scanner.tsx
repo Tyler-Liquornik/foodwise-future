@@ -153,26 +153,36 @@ const Scanner: React.FC = () => {
     // Use setTimeout(…, 0) to yield to the browser for the animation.
     setTimeout(async () => {
       try {
-        const img = new Image();
-        img.src = URL.createObjectURL(file);
-        await img.decode(); // Wait for the image to load
-
-        setUploadedImage(img.src);
-
-        // Call the Hugging Face service asynchronously.
-        const items = await recognizeFoodItems(img, 'fp32');
-
-        setRecognizedItems(items.map(item => ({
-          ...item,
-          id: crypto.randomUUID(),
-        })));
-        setShowResults(true);
-        toast.success(`Found ${items.length} items in image`);
+        const reader = new FileReader();
+        reader.onload = async (e) => {
+          if (e.target?.result) {
+            const imgSrc = e.target.result as string;
+            const img = document.createElement('img');
+            img.src = imgSrc;
+            
+            await new Promise((resolve) => {
+              img.onload = resolve;
+            });
+            
+            setUploadedImage(imgSrc);
+            
+            // Call the Hugging Face service
+            const items = await recognizeFoodItems(img, 'fp32');
+            
+            setRecognizedItems(items.map(item => ({
+              ...item,
+              id: crypto.randomUUID(),
+            })));
+            
+            setShowResults(true);
+            toast.success(`Found ${items.length} items in image`);
+          }
+        };
+        reader.readAsDataURL(file);
       } catch (error) {
         toast.error("Error processing image");
         console.error(error);
       } finally {
-        // Stop scanning (and the green bar animation) once processing is done.
         setIsScanning(false);
       }
     }, 0);
