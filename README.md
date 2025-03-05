@@ -1,4 +1,4 @@
-# FoodWise: Smart Food Waste Reduction Solution
+# FoodWise: A Smart Food Waste Reduction Solution
 
 ## Overview
 
