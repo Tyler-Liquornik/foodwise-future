@@ -28,7 +28,7 @@ const Recipes: React.FC = () => {
     {
       id: '1',
       title: 'Vegetable Stir Fry',
-      image: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dmVnZXRhYmxlJTIwc3RpciUyMGZyeXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60',
+      image: 'https://gatheringdreams.com/wp-content/uploads/2022/05/Vegetable-Stir-Fry-Noodles-recipe-square.jpg',
       prepTime: 10,
       cookTime: 15,
       ingredients: ['Broccoli', 'Bell Peppers', 'Carrots', 'Soy Sauce', 'Garlic'],
@@ -40,7 +40,7 @@ const Recipes: React.FC = () => {
     {
       id: '2',
       title: 'Pasta with Spinach',
-      image: 'https://images.unsplash.com/photo-1556761223-4c4282c73f77?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cGFzdGElMjB3aXRoJTIwc3BpbmFjaHxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60',
+      image: 'https://vancouverwithlove.com/wp-content/uploads/2023/07/vegan-spinach-pasta-sauce-featured-500x500.jpg',
       prepTime: 5,
       cookTime: 15,
       ingredients: ['Pasta', 'Spinach', 'Garlic', 'Olive Oil', 'Parmesan'],
@@ -52,7 +52,7 @@ const Recipes: React.FC = () => {
     {
       id: '3',
       title: 'Berry Smoothie Bowl',
-      image: 'https://images.unsplash.com/photo-1501443762994-82bd5dace89a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YmVycnklMjBzbW9vdGhpZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60',
+      image: 'https://www.whollytasteful.com/wp-content/uploads/2023/05/strawberry-smoothie-bowl-featured-500x500.jpg',
       prepTime: 10,
       cookTime: 0,
       ingredients: ['Frozen Berries', 'Banana', 'Yogurt', 'Honey', 'Granola'],
