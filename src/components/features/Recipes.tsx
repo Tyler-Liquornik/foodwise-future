@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Search, Utensils, Clock, Heart, Filter } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -29,7 +28,7 @@ const Recipes: React.FC = () => {
     {
       id: '1',
       title: 'Vegetable Stir Fry',
-      image: 'placeholder.svg',
+      image: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dmVnZXRhYmxlJTIwc3RpciUyMGZyeXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60',
       prepTime: 10,
       cookTime: 15,
       ingredients: ['Broccoli', 'Bell Peppers', 'Carrots', 'Soy Sauce', 'Garlic'],
@@ -41,7 +40,7 @@ const Recipes: React.FC = () => {
     {
       id: '2',
       title: 'Pasta with Spinach',
-      image: 'placeholder.svg',
+      image: 'https://images.unsplash.com/photo-1556761223-4c4282c73f77?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cGFzdGElMjB3aXRoJTIwc3BpbmFjaHxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60',
       prepTime: 5,
       cookTime: 15,
       ingredients: ['Pasta', 'Spinach', 'Garlic', 'Olive Oil', 'Parmesan'],
@@ -53,7 +52,7 @@ const Recipes: React.FC = () => {
     {
       id: '3',
       title: 'Berry Smoothie Bowl',
-      image: 'placeholder.svg',
+      image: 'https://images.unsplash.com/photo-1501443762994-82bd5dace89a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YmVycnklMjBzbW9vdGhpZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60',
       prepTime: 10,
       cookTime: 0,
       ingredients: ['Frozen Berries', 'Banana', 'Yogurt', 'Honey', 'Granola'],
@@ -65,7 +64,7 @@ const Recipes: React.FC = () => {
     {
       id: '4',
       title: 'Avocado Toast',
-      image: 'placeholder.svg',
+      image: 'https://images.unsplash.com/photo-1588137378633-dea1336ce1e2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YXZvY2FkbyUyMHRvYXN0fGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60',
       prepTime: 5,
       cookTime: 5,
       ingredients: ['Bread', 'Avocado', 'Eggs', 'Salt', 'Pepper'],

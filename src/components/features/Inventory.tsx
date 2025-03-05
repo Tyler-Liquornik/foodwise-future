@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Search, Filter, PlusCircle, Calendar, Lightbulb } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -18,30 +19,35 @@ const Inventory: React.FC = () => {
       name: 'Organic Milk',
       category: 'Dairy',
       expiryDate: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000), // 5 days from now
+      imageUrl: 'https://images.unsplash.com/photo-1563636619-e9143da7973b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fG1pbGt8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60'
     },
     {
       id: '2',
       name: 'Apples',
       category: 'Fruit',
       expiryDate: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000), // 10 days from now
+      imageUrl: 'https://images.unsplash.com/photo-1570913149827-d2ac84ab3f9a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YXBwbGV8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60'
     },
     {
       id: '3',
       name: 'Bread',
       category: 'Bakery',
       expiryDate: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000), // 2 days from now
+      imageUrl: 'https://images.unsplash.com/photo-1549931319-a545dcf3bc7c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YnJlYWR8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60'
     },
     {
       id: '4',
       name: 'Spinach',
       category: 'Vegetables',
       expiryDate: new Date(Date.now() + 4 * 24 * 60 * 60 * 1000), // 4 days from now
+      imageUrl: 'https://images.unsplash.com/photo-1576045057995-568f588f82fb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c3BpbmFjaHxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60'
     },
     {
       id: '5',
       name: 'Yogurt',
       category: 'Dairy',
       expiryDate: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000), // 1 day ago
+      imageUrl: 'https://images.unsplash.com/photo-1488477181946-6428a0291777?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8eW9ndXJ0fGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60'
     }
   ];
   
