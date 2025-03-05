@@ -2,7 +2,7 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
 import { format, differenceInDays } from 'date-fns';
-import { Clock, AlertTriangle } from 'lucide-react';
+import { Clock, AlertTriangle, Check, Square } from 'lucide-react';
 
 export interface FoodItem {
   id: string;
@@ -10,14 +10,16 @@ export interface FoodItem {
   category: string;
   expiryDate: Date;
   imageUrl?: string;
+  consumed?: boolean;
 }
 
 interface ItemCardProps {
   item: FoodItem;
   className?: string;
+  onToggleConsumed?: (id: string) => void;
 }
 
-const ItemCard: React.FC<ItemCardProps> = ({ item, className }) => {
+const ItemCard: React.FC<ItemCardProps> = ({ item, className, onToggleConsumed }) => {
   const daysToExpiry = differenceInDays(item.expiryDate, new Date());
   
   const getExpiryStatusColor = () => {
@@ -34,12 +36,31 @@ const ItemCard: React.FC<ItemCardProps> = ({ item, className }) => {
     return `Expires in ${daysToExpiry} days`;
   };
 
+  const handleCheckboxClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (onToggleConsumed) {
+      onToggleConsumed(item.id);
+    }
+  };
+
   return (
     <div className={cn(
       "bg-white rounded-lg p-4 shadow-soft border border-border/50 card-hover",
+      item.consumed && "opacity-60",
       className
     )}>
       <div className="flex items-center space-x-3">
+        <div 
+          className="cursor-pointer mr-1 text-primary" 
+          onClick={handleCheckboxClick}
+        >
+          {item.consumed ? (
+            <Check className="h-5 w-5" />
+          ) : (
+            <Square className="h-5 w-5" />
+          )}
+        </div>
+        
         <div className="h-16 w-16 rounded-md bg-secondary flex items-center justify-center overflow-hidden">
           {item.imageUrl ? (
             <img 
@@ -53,7 +74,12 @@ const ItemCard: React.FC<ItemCardProps> = ({ item, className }) => {
         </div>
         
         <div className="flex-1">
-          <h3 className="font-medium text-foreground line-clamp-1">{item.name}</h3>
+          <h3 className={cn(
+            "font-medium text-foreground line-clamp-1",
+            item.consumed && "line-through"
+          )}>
+            {item.name}
+          </h3>
           <p className="text-sm text-muted-foreground">{item.category}</p>
           
           <div className={cn(

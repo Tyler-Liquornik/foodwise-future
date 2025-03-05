@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Search, Filter, PlusCircle, Calendar, Lightbulb } from 'lucide-react';
+import { Search, Filter, PlusCircle, Calendar, Lightbulb, Apple, Milk, Carrot, Wheat, Check } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -8,60 +8,118 @@ import ItemCard, { FoodItem } from '@/components/ui/ItemCard';
 import { toast } from "sonner";
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
+import { Checkbox } from '@/components/ui/checkbox';
+
+// Define food groups and their icons
+const foodGroups = [
+  { id: 'all', name: 'All Items', icon: <Check className="h-4 w-4" /> },
+  { id: 'Fruit', name: 'Fruits', icon: <Apple className="h-4 w-4" /> },
+  { id: 'Dairy', name: 'Dairy', icon: <Milk className="h-4 w-4" /> },
+  { id: 'Vegetables', name: 'Vegetables', icon: <Carrot className="h-4 w-4" /> },
+  { id: 'Bakery', name: 'Bakery', icon: <Wheat className="h-4 w-4" /> },
+];
 
 const Inventory: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [activeTab, setActiveTab] = useState("all");
-  
-  const inventoryItems: FoodItem[] = [
+  const [selectedFoodGroup, setSelectedFoodGroup] = useState('all');
+  const [inventoryItems, setInventoryItems] = useState<FoodItem[]>([
     {
       id: '1',
       name: 'Organic Milk',
       category: 'Dairy',
       expiryDate: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000), // 5 days from now
-      imageUrl: 'https://images.unsplash.com/photo-1563636619-e9143da7973b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fG1pbGt8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60'
+      imageUrl: 'https://images.unsplash.com/photo-1563636619-e9143da7973b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fG1pbGt8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60',
+      consumed: false
     },
     {
       id: '2',
       name: 'Apples',
       category: 'Fruit',
       expiryDate: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000), // 10 days from now
-      imageUrl: 'https://images.unsplash.com/photo-1570913149827-d2ac84ab3f9a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YXBwbGV8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60'
+      imageUrl: 'https://images.unsplash.com/photo-1570913149827-d2ac84ab3f9a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YXBwbGV8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60',
+      consumed: false
     },
     {
       id: '3',
       name: 'Bread',
       category: 'Bakery',
       expiryDate: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000), // 2 days from now
-      imageUrl: 'https://www.theperfectloaf.com/wp-content/uploads/2023/05/theperfectloaf_ai_generated_sourdough_bread_recipe_featured-1920x1280.jpg'
+      imageUrl: 'https://www.theperfectloaf.com/wp-content/uploads/2023/05/theperfectloaf_ai_generated_sourdough_bread_recipe_featured-1920x1280.jpg',
+      consumed: false
     },
     {
       id: '4',
       name: 'Spinach',
       category: 'Vegetables',
       expiryDate: new Date(Date.now() + 4 * 24 * 60 * 60 * 1000), // 4 days from now
-      imageUrl: 'https://images.unsplash.com/photo-1576045057995-568f588f82fb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c3BpbmFjaHxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60'
+      imageUrl: 'https://images.unsplash.com/photo-1576045057995-568f588f82fb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c3BpbmFjaHxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60',
+      consumed: false
     },
     {
       id: '5',
       name: 'Yogurt',
       category: 'Dairy',
       expiryDate: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000), // 1 day ago
-      imageUrl: 'https://images.unsplash.com/photo-1488477181946-6428a0291777?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8eW9ndXJ0fGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60'
+      imageUrl: 'https://images.unsplash.com/photo-1488477181946-6428a0291777?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8eW9ndXJ0fGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60',
+      consumed: false
     }
-  ];
+  ]);
   
-  const filteredItems = inventoryItems.filter(item => 
-    item.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
-    item.category.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const toggleItemConsumed = (id: string) => {
+    setInventoryItems(prevItems => 
+      prevItems.map(item => 
+        item.id === id ? { ...item, consumed: !item.consumed } : item
+      )
+    );
+    
+    const item = inventoryItems.find(item => item.id === id);
+    if (item) {
+      toast.success(
+        item.consumed ? `Unmarked ${item.name}` : `Marked ${item.name} as consumed`, 
+        { duration: 2000 }
+      );
+    }
+  };
   
-  const expiringItems = filteredItems.filter(item => {
+  // Apply all filters: search, tab (expiry status) and food group
+  const applyFilters = () => {
+    // First filter by search term
+    let filtered = inventoryItems.filter(item => 
+      item.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
+      item.category.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    
+    // Then filter by food group if not 'all'
+    if (selectedFoodGroup !== 'all') {
+      filtered = filtered.filter(item => item.category === selectedFoodGroup);
+    }
+    
+    // Then apply the tab filters (expiry status)
+    if (activeTab === "soon") {
+      return filtered.filter(item => {
+        const daysToExpiry = Math.floor((item.expiryDate.getTime() - Date.now()) / (1000 * 60 * 60 * 24));
+        return daysToExpiry >= 0 && daysToExpiry <= 3;
+      });
+    } else if (activeTab === "expired") {
+      return filtered.filter(item => {
+        const daysToExpiry = Math.floor((item.expiryDate.getTime() - Date.now()) / (1000 * 60 * 60 * 24));
+        return daysToExpiry < 0;
+      });
+    }
+    
+    return filtered;
+  };
+  
+  const filteredItems = applyFilters();
+  
+  // Calculate counts for the tabs separately
+  const expiringItems = inventoryItems.filter(item => {
     const daysToExpiry = Math.floor((item.expiryDate.getTime() - Date.now()) / (1000 * 60 * 60 * 24));
     return daysToExpiry >= 0 && daysToExpiry <= 3;
   });
   
-  const expiredItems = filteredItems.filter(item => {
+  const expiredItems = inventoryItems.filter(item => {
     const daysToExpiry = Math.floor((item.expiryDate.getTime() - Date.now()) / (1000 * 60 * 60 * 24));
     return daysToExpiry < 0;
   });
@@ -111,6 +169,22 @@ const Inventory: React.FC = () => {
           </Button>
         </div>
         
+        {/* Food Group Selection */}
+        <div className="flex overflow-x-auto gap-2 pb-2 mb-4 no-scrollbar">
+          {foodGroups.map((group) => (
+            <Button
+              key={group.id}
+              variant={selectedFoodGroup === group.id ? "default" : "outline"}
+              size="sm"
+              className="flex items-center gap-1.5 whitespace-nowrap"
+              onClick={() => setSelectedFoodGroup(group.id)}
+            >
+              {group.icon}
+              <span>{group.name}</span>
+            </Button>
+          ))}
+        </div>
+        
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="grid w-full grid-cols-3">
             <TabsTrigger 
@@ -123,9 +197,9 @@ const Inventory: React.FC = () => {
               )}
             >
               All Items
-              {filteredItems.length > 0 && (
+              {inventoryItems.length > 0 && (
                 <Badge variant="outline" className="ml-2 bg-green-100 text-green-700 border-green-200">
-                  {filteredItems.length}
+                  {inventoryItems.length}
                 </Badge>
               )}
             </TabsTrigger>
@@ -172,6 +246,7 @@ const Inventory: React.FC = () => {
                   <ItemCard 
                     key={item.id} 
                     item={item} 
+                    onToggleConsumed={toggleItemConsumed}
                   />
                 ))}
               </div>
@@ -182,13 +257,13 @@ const Inventory: React.FC = () => {
                 </div>
                 <h3 className="text-lg font-medium">No items found</h3>
                 <p className="text-muted-foreground text-sm mt-1 max-w-xs">
-                  {searchTerm ? 
+                  {searchTerm || selectedFoodGroup !== 'all' ? 
                     "Try searching with different terms or categories" :
                     "Your inventory is empty. Scan items to add them to your inventory."
                   }
                 </p>
                 
-                {!searchTerm && (
+                {!searchTerm && selectedFoodGroup === 'all' && (
                   <Button 
                     variant="default" 
                     className="mt-4 gap-2"
@@ -203,7 +278,7 @@ const Inventory: React.FC = () => {
           </TabsContent>
           
           <TabsContent value="soon" className="animate-slide-up mt-0">
-            {expiringItems.length > 0 ? (
+            {filteredItems.length > 0 ? (
               <>
                 <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-4">
                   <div className="flex items-start">
@@ -211,7 +286,7 @@ const Inventory: React.FC = () => {
                     <div>
                       <h3 className="font-medium text-amber-800">Action needed</h3>
                       <p className="text-sm text-amber-700 mt-1">
-                        You have {expiringItems.length} items expiring within 3 days.
+                        You have {filteredItems.length} items expiring within 3 days.
                       </p>
                       <Button 
                         variant="outline" 
@@ -226,10 +301,11 @@ const Inventory: React.FC = () => {
                 </div>
                 
                 <div className="space-y-3">
-                  {expiringItems.map(item => (
+                  {filteredItems.map(item => (
                     <ItemCard 
                       key={item.id} 
                       item={item} 
+                      onToggleConsumed={toggleItemConsumed}
                     />
                   ))}
                 </div>
@@ -248,7 +324,7 @@ const Inventory: React.FC = () => {
           </TabsContent>
           
           <TabsContent value="expired" className="animate-slide-up mt-0">
-            {expiredItems.length > 0 ? (
+            {filteredItems.length > 0 ? (
               <>
                 <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-4">
                   <div className="flex items-start">
@@ -256,7 +332,7 @@ const Inventory: React.FC = () => {
                     <div>
                       <h3 className="font-medium text-red-800">Items expired</h3>
                       <p className="text-sm text-red-700 mt-1">
-                        {expiredItems.length} items have expired. Consider proper disposal or check if they're still usable.
+                        {filteredItems.length} items have expired. Consider proper disposal or check if they're still usable.
                       </p>
                       <Button 
                         variant="outline" 
@@ -271,10 +347,11 @@ const Inventory: React.FC = () => {
                 </div>
                 
                 <div className="space-y-3">
-                  {expiredItems.map(item => (
+                  {filteredItems.map(item => (
                     <ItemCard 
                       key={item.id} 
-                      item={item} 
+                      item={item}
+                      onToggleConsumed={toggleItemConsumed}
                     />
                   ))}
                 </div>
