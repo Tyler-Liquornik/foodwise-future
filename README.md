@@ -10,6 +10,14 @@ FoodWise was designed as a scalable solution to address food wastage, particular
 It was completely designed in less than 24 hours for a project for Ivey's Leveraging Information Technology 3322K.
 The challenge FoodWise addressed was to create an AI-powered solution to addressed a problem in environmental sustainability.
 
+## 🌍 Environmental Impact Goals
+
+FoodWise should help users:
+- Reduce personal food waste
+- Lower carbon emissions
+- Save money on groceries
+- Support community food sharing
+
 ## 🌟 Key Features Designed
 
 This is the scope of features the team planned for a full-scale version of the app:
@@ -21,7 +29,7 @@ This is the scope of features the team planned for a full-scale version of the a
 
 ## 🚀 Tech Stack
 
-This is the scope of the technology that was actually implemented in the 24 hour period of the assignemnt: 
+This is the scope of the technology that was actually implemented in the 24 hour period of the assignment: 
 - **Frontend**: React.js via Lovable.dev
 - **Webcam API**: react-webcam allows streaming webcam video
 - **AI Technology**: HuggingFace object detection allows quickly adding foods to the app's system
@@ -34,13 +42,7 @@ At scale we would like to add:
 - **Barcode API**: OpenFoodFacts and GS1 integration for comprehensive global product information and tracking
 - **AI Technology**: Custom trained AI model that can more accurately recognize food items, and estimate food quality and expiry times.
 
-## 🛠 Prerequisites
-
-- Node.js (v16+)
-- npm
-- Modern web browser
-
-## 📦 Installation
+## 📦 Dev Env Setup
 
 1. Clone the repository
 ```bash
@@ -57,20 +59,3 @@ npm install
 ```bash
 npm run dev
 ```
-
-## 🌍 Environmental Impact
-
-FoodTrack helps users:
-- Reduce personal food waste
-- Lower carbon emissions
-- Save money on groceries
-- Support community food sharing
-
-## 🔮 Future Roadmap
-
-- Enhanced AI prediction accuracy
-- Expanded donation network integration
-- Personalized nutrition insights
-- Corporate sustainability partnerships
-
-
