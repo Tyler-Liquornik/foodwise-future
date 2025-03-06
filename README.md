@@ -24,7 +24,7 @@ This is the scope of features the team planned for a full-scale version of the a
 This is the scope of the technology that was actually implemented in the 24 hour period of the assignemnt: 
 - **Frontend**: React.js via Lovable.dev
 - **Webcam API**: react-webcam allows streaming webcam video
-- **AI Technology**: HuggingFace object detection allows wuickly adding foods to the app's shstem
+- **AI Technology**: HuggingFace object detection allows quickly adding foods to the app's system
 
 At scale we would like to add:
 - **Backend**: PostgreSQL database managed through Supabase Cloud for data storage
