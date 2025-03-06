@@ -4,7 +4,7 @@
 
 Check out the project: https://foodwise-future.netlify.app/
 
-FoodWise is an innovative mobile application designed to combat food waste by empowering users to track, manage, and optimize their food consumption. By leveraging cutting-edge AI and user-friendly scanning technology, the app helps individuals and businesses reduce food waste, save money, and contribute to environmental sustainability.
+FoodWise is an innovative mobile and desktop web application designed to combat food waste by empowering users to track, manage, and optimize their food consumption. By leveraging cutting-edge AI and user-friendly scanning technology, the app helps individuals and businesses reduce food waste, save money, and contribute to environmental sustainability.
 
 FoodWise was designed as a scalable solution to address food wastage, particularly with students in mind. 
 It was completely designed in less than 24 hours for a project for Ivey's Leveraging Information Technology 3322K.
@@ -23,7 +23,7 @@ The challenge FoodWise addressed was to create an AI-powered solution to address
 This is the scope of the technology that was actually implemented in the 24 hour period of the assignemnt: 
 - **Frontend**: React.js via Lovable.dev
 - **Webcam API**: react-webcam allows streaming webcam video
-- **AI Technology**: HuggingFace (Image Recognition)
+- **AI Technology**: HuggingFace object detection allows wuickly adding foods to the app's shstem
 
 At scale we would like to add:
 - **Backend**: PostgreSQL database managed through Supabase Cloud for data storage
