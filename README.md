@@ -2,6 +2,8 @@
 
 ## Overview
 
+Check out the project: https://foodwise-future.netlify.app/
+
 FoodWise is an innovative mobile application designed to combat food waste by empowering users to track, manage, and optimize their food consumption. By leveraging cutting-edge AI and user-friendly scanning technology, the app helps individuals and businesses reduce food waste, save money, and contribute to environmental sustainability.
 
 FoodWise was designed as a scalable solution to address food wastage, particularly with students in mind. 
