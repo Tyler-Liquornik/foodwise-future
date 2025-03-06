@@ -10,12 +10,13 @@ FoodWise was designed as a scalable solution to address food wastage, particular
 It was completely designed in less than 24 hours for a project for Ivey's Leveraging Information Technology 3322K.
 The challenge FoodWise addressed was to create an AI-powered solution to addressed a problem in environmental sustainability.
 
-## 🌟 Key Features
+## 🌟 Key Features Designed
 
+This is the scope of features the team planned for a full-scale version of the app:
 - **Barcode & Image Scanning**: Easily log grocery items using barcode or image recognition
 - **AI-Powered Expiry Predictions**: Intelligent shelf-life tracking and expiration alerts
 - **Smart Recipe Suggestions**: Generate recipes using ingredients approaching expiration
-- **Donation Recommendations**: Connect users with local food banks and community resources
+- **Donation Recommendations**: Connect users with local food banks and community resources (and donations to us!)
 - **Sustainability Tracking**: Monitor personal food waste and carbon footprint reduction
 
 ## 🚀 Tech Stack
@@ -31,7 +32,7 @@ At scale we would like to add:
 - **Payments & Donations**: Stripe integration enables seamless, tax-deductible charitable contributions
 - **Google Ads Integration**: Targeted ad placement to generate revenue and support app sustainability efforts
 - **Barcode API**: OpenFoodFacts and GS1 integration for comprehensive global product information and tracking
-- **AI Technology**: Custom trained AI model that can more accurately estimate food quality and expiry times.
+- **AI Technology**: Custom trained AI model that can more accurately recognize food items, and estimate food quality and expiry times.
 
 ## 🛠 Prerequisites
 
